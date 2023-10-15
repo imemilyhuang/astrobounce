@@ -36,7 +36,7 @@ const Welcome = ({setIsPlaying}) => {
             </Animated.View> 
 
             <Text style={styles.p}>welcome to</Text>
-            <Text style={styles.title}>ASTROBOUNCE</Text>
+            <Text style={styles.title}>⭐ ASTROBOUNCE 🪐</Text>
             <Pressable style={[styles.button, {marginBottom: '300px'}]} onPress={() => setIsPlaying(true)}>
                 <Text style={[styles.h1]}>PLAY</Text>
             </Pressable>

@@ -18,7 +18,7 @@ const ChooseCharacter = ({setIsChoosing, setCharacter, character}) => {
         <Pressable key={planet.name} onPress={() => setCharacter(planet.name)}>
             <Image
                 source={planet.source}
-                style={[planet.name===character && { borderWidth: "2px", borderColor: "#fff"}, {height: "100px", width: "100px", padding: "8px", margin: "8px"}]}
+                style={[planet.name===character && { borderWidth: "2px", borderColor: "#fff"}, {height: "100px", width: "100px", margin: "8px"}]}
             />
         </Pressable>
     ))
@@ -27,7 +27,7 @@ const ChooseCharacter = ({setIsChoosing, setCharacter, character}) => {
         <View style={styles.container}>
             <Text style={styles.title}>FIRE UP...</Text>
             <Text style={styles.p}>CHOOSE YOUR PLANET</Text>
-            <View style={{display: "flex", flexDirection: "row", flexWrap: "wrap"}}>
+            <View style={{display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: "center", alignItems: "center", margin: "20px"}}>
                 {renderPlanets}
             </View>
 

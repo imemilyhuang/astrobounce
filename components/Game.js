@@ -42,7 +42,7 @@ const Game = ({setIsPlaying, setScore, setGameOver, character}) => {
     const yPos = useSharedValue(400)
     const animatedPosition = useAnimatedStyle(() => {
         return {
-            left: withSpring(xPos.value),
+            left: withSpring(xPos.value, {damping: 2000, overshootClamping: true, mass: 0.02}),
             bottom: yPos.value
         }
     }, [xPos, yPos])
@@ -70,7 +70,7 @@ const Game = ({setIsPlaying, setScore, setGameOver, character}) => {
             isJumping.value = true
 
             // Apply an upward yVelocity to simulate jumping
-            yVelocity.value = WINDOW_HEIGHT/80
+            yVelocity.value = WINDOW_HEIGHT/60
         
             // Simulate falling back down after a short delay (adjust as needed)
             setTimeout(() => {
@@ -130,13 +130,21 @@ const Game = ({setIsPlaying, setScore, setGameOver, character}) => {
     // record when user presses keys and move player accordingly
     useEffect(() => {
         const handleKeyDown = (event) => {
-            keyPressed.value = true
-            if (event.key === 'ArrowLeft') {
-                direction.value = -1
-                xVelocity.value = -15
-            } else if (event.key === 'ArrowRight') {
-                direction.value = 1
-                xVelocity.value = 15
+            if (keyPressed.value===false) {
+                if (event.key === 'ArrowLeft') {
+                    direction.value = -1
+                    xVelocity.value = -15
+                } else if (event.key === 'ArrowRight') {
+                    direction.value = 1
+                    xVelocity.value = 15
+                }
+                keyPressed.value = true
+            } else {
+                if (event.key === 'ArrowLeft') {
+                    xVelocity.value -= 15
+                } else if (event.key === 'ArrowRight') {
+                    xVelocity.value += 15
+                }
             }
         }
         window.addEventListener('keydown', handleKeyDown)
