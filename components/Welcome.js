@@ -58,7 +58,6 @@ const styles = StyleSheet.create({
     title: {
         color: "#fff",
         fontSize: "48px",
-        marginTop: "20px"
     },
     p: {
         color: "#fff",
@@ -73,7 +72,7 @@ const styles = StyleSheet.create({
         borderColor: "#fff",
         paddingHorizontal: "8px",
         paddingVertical: "4px",
-        marginTop: "20px"
+        marginTop: "32px"
     }
 
 })
