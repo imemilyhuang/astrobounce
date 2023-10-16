@@ -3,24 +3,43 @@ import React, { useState } from 'react'
 
 import pauseImg from "../assets/planets/Pause.png"
 import pauseHoverImg from "../assets/planets/Pause Hovering.png"
+import HoverButton from './HoverButton'
 
-const Nav = ({score, setPaused, highScore}) => {
-    const [hovering, setHovering] = useState(false)
+const Nav = ({score, setPaused, highScore, stopMove, character, setIsChoosing}) => {
+    const [hoveringPause, setHoveringPause] = useState(false)
+    const [hoveringBtn, setHoveringBtn] = useState(false)
+
+    const handlePause = () => {
+        setPaused(true)
+        stopMove.value = true
+    }
+
+    const handleChoose = () => {
+        stopMove.value = true
+        setIsChoosing(true)
+    }
 
     return (
         <View style={styles.container}>
-            <Pressable
-                onHoverIn={() => setImageSource(true)}
-                onHoverOut={() => setHovering(false)}
-                onPress={() => setPaused(true)}
-            >
-                <Image 
-                    style={styles.pause}
-                    source={hovering ? pauseHoverImg :
-                        pauseImg 
-                    }
+            <View style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
+                <Pressable
+                    onHoverIn={() => setHoveringPause(true)}
+                    onHoverOut={() => setHoveringPause(false)}
+                    onPress={handlePause}
+                    style={{marginRight: "16px"}}
+                >
+                    <Image 
+                        style={styles.pause}
+                        source={hoveringPause ? pauseHoverImg :
+                            pauseImg 
+                        }
+                    />
+                </Pressable>
+                <HoverButton 
+                    onPressFunc={handleChoose}
+                    text={character.toUpperCase()}
                 />
-            </Pressable>
+            </View>
             <View style={{display: "flex", flexDirection: "row"}}>
                 <View style={[styles.scoreContainer, {marginRight: "12px"}]}>
                     <Text style={styles.h1}>YOUR SCORE</Text>
@@ -40,13 +59,14 @@ export default Nav
 const styles = StyleSheet.create({
     container: {
         position: "absolute",
-        // backgroundColor: "green",
+        backgroundColor: "#000",
         top: 0,
         width: "100%",
-        padding: "20px",
+        paddingHorizontal: "20px",
         flexDirection: "row",
         zIndex: "1000",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
+        alignItems: "center"
     },
     p: {
         color: "#fff",
@@ -56,10 +76,6 @@ const styles = StyleSheet.create({
     h1: {
         color: "#fff",
         fontSize: "14px"
-    },
-    h2: {
-        color: "#fff",
-        fontSize: "20px"
     },
     scoreContainer: {
         display: "flex",
