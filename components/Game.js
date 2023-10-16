@@ -13,8 +13,9 @@ const BLOCK_WIDTH = 100
 const BLOCK_HEIGHT = 20
 
 const X_DRAG = 0.3
+const xVelocityStep = Math.floor(WINDOW_WIDTH/50)
 
-const Game = ({setIsPlaying, setScore, setGameOver, character}) => {
+const Game = ({setIsPlaying, setScore, setGameOver, character, stopMove}) => {
     const initial = Array(Math.ceil(WINDOW_HEIGHT/75)).fill(0).map((_, index) => {
         if (index==0) {
             return {x: WINDOW_WIDTH/2, y: 100}
@@ -42,7 +43,8 @@ const Game = ({setIsPlaying, setScore, setGameOver, character}) => {
     const yPos = useSharedValue(400)
     const animatedPosition = useAnimatedStyle(() => {
         return {
-            left: withSpring(xPos.value, {damping: 2000, overshootClamping: true, mass: 0.02}),
+            left: withSpring(xPos.value, 
+                {damping: 2000, overshootClamping: true, mass: 0.02}),
             bottom: yPos.value
         }
     }, [xPos, yPos])
@@ -133,17 +135,17 @@ const Game = ({setIsPlaying, setScore, setGameOver, character}) => {
             if (keyPressed.value===false) {
                 if (event.key === 'ArrowLeft') {
                     direction.value = -1
-                    xVelocity.value = -15
+                    xVelocity.value = -xVelocityStep
                 } else if (event.key === 'ArrowRight') {
                     direction.value = 1
-                    xVelocity.value = 15
+                    xVelocity.value = xVelocityStep
                 }
                 keyPressed.value = true
             } else {
                 if (event.key === 'ArrowLeft') {
-                    xVelocity.value -= 15
+                    xVelocity.value -= xVelocityStep
                 } else if (event.key === 'ArrowRight') {
-                    xVelocity.value += 15
+                    xVelocity.value += xVelocityStep
                 }
             }
         }
@@ -169,17 +171,19 @@ const Game = ({setIsPlaying, setScore, setGameOver, character}) => {
     // simulate gravity, move player and blocks, detect collisions
     useEffect(() => {
         const fallInterval = setInterval(() => {
-            // Apply gravity to the player's yVelocity
-            yVelocity.value += GRAVITY
-
-            if (yVelocity.value > 0 
-                && yPos.value > WINDOW_HEIGHT/2) {
-                moveBlocks()
-            } else {
-                yPos.value += yVelocity.value
+            if (!stopMove.value) {
+                // Apply gravity to the player's yVelocity
+                yVelocity.value += GRAVITY
+    
+                if (yVelocity.value > 0 
+                    && yPos.value > WINDOW_HEIGHT/2) {
+                    moveBlocks()
+                } else {
+                    yPos.value += yVelocity.value
+                }
+                detectCollision()
+                movePlayer()
             }
-            detectCollision()
-            movePlayer()
         }, 20)
     
         return () => clearInterval(fallInterval)
