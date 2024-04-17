@@ -1,7 +1,8 @@
-import { StyleSheet, Text, Pressable, Image, Dimensions, Easing } from 'react-native'
+import { StyleSheet, Text, Pressable, Image, Dimensions, Easing, View } from 'react-native'
 import React, { useEffect } from 'react'
 // import { Motion } from "@legendapp/motion"
 import Animated, { FadeIn, FadeOut, useAnimatedStyle, withTiming, withRepeat, withSequence, useSharedValue } from "react-native-reanimated"
+import HoverButton from './HoverButton'
 
 const WINDOW_HEIGHT = Dimensions.get("window").height
 const WINDOW_WIDTH = Dimensions.get("window").width
@@ -37,9 +38,11 @@ const Welcome = ({setIsPlaying}) => {
 
             <Text style={styles.p}>welcome to</Text>
             <Text style={styles.title}>⭐ ASTROBOUNCE 🪐</Text>
-            <Pressable style={[styles.button, {marginBottom: '300px'}]} onPress={() => setIsPlaying(true)}>
-                <Text style={[styles.h1]}>PLAY</Text>
-            </Pressable>
+            <HoverButton 
+                onPressFunc={() => setIsPlaying(true)}
+                text="PLAY"
+            />
+            <View style={{height: "300px"}} />
         </Animated.View>
     )
 }

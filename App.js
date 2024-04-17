@@ -7,11 +7,14 @@ import Nav from './components/Nav';
 import Pause from './components/Pause';
 import GameOver from './components/GameOver';
 import ChooseCharacter from './components/ChooseCharacter';
+import { useSharedValue } from 'react-native-reanimated';
 
 export default function App() {
   const [isPlaying, setIsPlaying] = useState(false)
   const [paused, setPaused] = useState(false)
   const [gameOver, setGameOver] = useState(false)
+  const stopMove = useSharedValue(true)
+
   const [score, setScore] = useState(0)
   const [highScore, setHighScore] = useState(0)
   const [character, setCharacter] = useState("Earth")
@@ -57,16 +60,16 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      {paused && <Pause character={character} setIsPlaying={setIsPlaying} setPause={setPaused}/>}
-      {isPlaying && isChoosing && <ChooseCharacter character={character}  setIsChoosing={setIsChoosing} setCharacter={setCharacter} /> }
+      {paused && <Pause stopMove={stopMove} character={character} setIsPlaying={setIsPlaying} setPause={setPaused}/>}
+      {isPlaying && isChoosing && <ChooseCharacter character={character}  setIsChoosing={setIsChoosing} setCharacter={setCharacter} stopMove={stopMove} /> }
       {
         isPlaying ? <> 
-          <Nav highScore={highScore} score={score} paused={paused} setPaused={setPaused} />
-          <Game character={character} setGameOver={setGameOver} setIsPlaying={setIsPlaying} setScore={setScore} /> 
+          <Nav character={character} setIsChoosing={setIsChoosing} stopMove={stopMove} highScore={highScore} score={score} paused={paused} setPaused={setPaused} />
+          <Game stopMove={stopMove} isChoosing={isChoosing} pause={paused} character={character} setGameOver={setGameOver} setIsPlaying={setIsPlaying} setScore={setScore} /> 
         </> :
           gameOver ? 
-            <GameOver character={character} score={score} setIsPlaying={setIsPlaying} setGameOver={setGameOver} />  :
-              <Welcome setIsPlaying={setIsPlaying} />
+            <GameOver stopMove={stopMove} character={character} score={score} setIsPlaying={setIsPlaying} setGameOver={setGameOver} />  :
+              <Welcome stopMove={stopMove} setIsPlaying={setIsPlaying} />
       }
     </View>
   );

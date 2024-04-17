@@ -1,6 +1,7 @@
 import { Image, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { Pressable } from 'react-native'
+import HoverButton from './HoverButton'
 
 const GameOver = ({setGameOver, setIsPlaying, character}) => {
     const handleReplay = () => {
@@ -21,9 +22,10 @@ const GameOver = ({setGameOver, setIsPlaying, character}) => {
 
             <Text style={styles.title}>YOU FELL!</Text>
 
-            <Pressable onPress={handleReplay} style={styles.button}>
-                <Text style={styles.h1}>PLAY AGAIN</Text>
-            </Pressable>
+            <HoverButton 
+                text="PLAY AGAIN"
+                onPressFunc={handleReplay}
+            />
             <Pressable onPress={handleExit}>
                 <Text style={styles.h1}>EXIT</Text>
             </Pressable>

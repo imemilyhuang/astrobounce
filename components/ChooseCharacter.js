@@ -1,7 +1,8 @@
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
+import HoverButton from './HoverButton'
 
-const ChooseCharacter = ({setIsChoosing, setCharacter, character}) => {
+const ChooseCharacter = ({stopMove, setIsChoosing, setCharacter, character}) => {
     const planets = [
         {source: require("../assets/planets/Mercury.png"), name: "Mercury"},
         {source: require("../assets/planets/Venus.png"), name: "Venus"},
@@ -23,6 +24,11 @@ const ChooseCharacter = ({setIsChoosing, setCharacter, character}) => {
         </Pressable>
     ))
 
+    const handleLaunch = () => {
+        setIsChoosing(false)
+        stopMove.value = false
+    }
+
     return (
         <View style={styles.container}>
             <Text style={styles.title}>FIRE UP...</Text>
@@ -31,10 +37,10 @@ const ChooseCharacter = ({setIsChoosing, setCharacter, character}) => {
                 {renderPlanets}
             </View>
 
-            <Pressable style={styles.button} onPress={() => setIsChoosing(false)}>
-                <Text style={styles.h1}>LAUNCH →</Text>
-            </Pressable>
-
+            <HoverButton
+                onPressFunc={handleLaunch}
+                text="LAUNCH →"
+            />
 
         </View>
     )

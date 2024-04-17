@@ -1,15 +1,18 @@
 import { Image, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { Pressable } from 'react-native'
+import HoverButton from './HoverButton'
 
-const Pause = ({setPause, setIsPlaying, character}) => {
+const Pause = ({setPause, setIsPlaying, character, stopMove}) => {
     const handleResume = () => {
         setPause(false)
+        stopMove.value = false
     }
 
     const handleExit = () => {
         setPause(false)
         setIsPlaying(false)
+        stopMove.value = false
     }
     return (
         <View style={styles.container}>
@@ -19,10 +22,10 @@ const Pause = ({setPause, setIsPlaying, character}) => {
             />
 
             <Text style={styles.title}>GAME PAUSED</Text>
-
-            <Pressable onPress={handleResume} style={styles.button}>
-                <Text style={styles.h1}>RESUME</Text>
-            </Pressable>
+            <HoverButton 
+                onPressFunc={handleResume}
+                text="RESUME"
+            />
             <Pressable onPress={handleExit}>
                 <Text style={styles.h1}>EXIT</Text>
             </Pressable>
