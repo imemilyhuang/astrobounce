@@ -2,4 +2,4 @@ AstroBounce is a space-themed web game built using React Native Web and Expo and
 
 During gameplay, you use the arrow keys on your keyboard to navigate the planet across the screen and jump up from platform to platform. Gameplay is infinite and lasts as long as the user would like. The game ends when you miss the platforms and fall to the bottom of the screen.
 
-Also available at https://astrobounce.co
+Also available at https://astrobounce.co through October 2024
